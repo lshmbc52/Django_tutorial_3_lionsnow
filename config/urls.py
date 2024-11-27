@@ -17,8 +17,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import settings
+from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("",views.HomeView.as_view(), name='index') ,
+    path("cafe/", include("cafe.urls")),
 ]
 if settings.DEBUG:
     import debug_toolbar
