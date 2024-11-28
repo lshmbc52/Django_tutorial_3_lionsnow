@@ -1,8 +1,44 @@
-<h1>Cafe 사나리아</h1>
-<p>관리자 페이지입니다</p>
-<ul>
-<li><a href="{% url 'cafe:menu_list_page' %}">메뉴리스트</a> </li>
-<li><a href="{% url 'cafe:menu_add_page' %}">메뉴추가</a> </li>
-<li><a href="/admin/">관리자페이지</a> </li>
-</ul>
-<img src="https://www.indonesia.travel/content/dam/indtravelrevamp/en/trip-ideas/5-jakarta-cafes-every-instagrammer-should-visit/header.jpg" alt="" width="70%" height="auto">
+{% extends 'base.html' %}
+{% block content %}
+<div class="container my-5">
+    <!-- 제목 -->
+    <div class="text-center mb-5">
+      <h1 class="display-4 text-primary">Cafe 사나리아</h1>
+    </div>
+    
+    <!-- 카드 그리드 -->
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <!-- 메뉴 리스트 -->
+      <div class="col">
+        <div class="card h-100 shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title text-secondary"><i class="bi bi-card-list me-2"></i>메뉴 리스트</h5>
+            <p class="card-text">현재 등록된 메뉴를 확인하고 관리할 수 있습니다.</p>
+            <a href="{% url 'cafe:menu_list_page' %}" class="btn btn-outline-primary">이동</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- 메뉴 추가 -->
+      <div class="col">
+        <div class="card h-100 shadow">
+          <div class="card-body text-center">
+            <h5 class="card-title text-secondary"><i class="bi bi-plus-circle me-2"></i>메뉴 추가</h5>
+            <p class="card-text">새로운 메뉴를 추가하여 업데이트하세요.</p>
+            <a href="{% url 'cafe:menu_add_page' %}" class="btn btn-outline-success">이동</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 이미지 -->
+    <div class="text-center mt-5">
+      <img 
+        src="https://www.indonesia.travel/content/dam/indtravelrevamp/en/trip-ideas/5-jakarta-cafes-every-instagrammer-should-visit/header.jpg" 
+        alt="Cafe Image" 
+        class="img-fluid rounded" 
+        style="max-width: 70%; height: auto;"
+      >
+    </div>
+  </div>
+{% endblock %}
