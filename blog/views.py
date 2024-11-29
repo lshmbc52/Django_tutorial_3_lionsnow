@@ -23,8 +23,7 @@ def category_add(request):
         if form.is_valid():
             form.save()
             return redirect('blog:category_list')
-
-        pass
+        
     elif request.method == "GET": # form 입력하는 페이지는 표시
         form = CategoryForm()  
     return render(request, 'blog/category_form.html', context={'form':form})
@@ -44,3 +43,20 @@ def category_post_list(request, category_id):
     posts = Post.objects.filter(category=category)
     context = {'posts':posts, 'category':category, 'categories':categories}
     return render(request, 'blog/index.html', context)
+
+def post_write(request):
+    # post 작성
+    # 이전에 했던 question, **choice** 어떤것과 유사한가?
+    # form 이용
+    if request.method == 'GET':
+        form = PostForm()
+        context={'form':form}
+        return render(request=request, template_name='blog/post_form.html',context=context)
+    # elif request.method=='POST':
+    #     pass
+    else: 
+        form = PostForm(request.POST)
+        if form.is_valid():
+            post = form.save() # 내가 저장한 내용이 잘 보이는지 확인하고 싶습니다.
+            return redirect('blog:post_detail', post_id=post.id)
+            # return redirect('blog:index')
