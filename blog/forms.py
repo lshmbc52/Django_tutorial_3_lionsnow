@@ -16,15 +16,15 @@ class CategoryForm(forms.ModelForm):
 class PostForm(forms.ModelForm):
     class Meta:
         model=Post
-        fields=['title','category','content']
+        fields=['title','content']
         widgets = {
             'title':forms.TextInput(attrs={
                 'class':'form-control',
                 'placeholder':'제목을 입력하세요'
             }),
-            'category':forms.Select(attrs={
-                'class':'form-control',
-            }),
+            # 'category':forms.Select(attrs={
+            #     'class':'form-control',
+            # }),
             'content':forms.TextInput(attrs={
                 'class':'form-control',
                 'rows':10,
