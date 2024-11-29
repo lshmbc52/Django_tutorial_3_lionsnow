@@ -31,6 +31,20 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="{% url 'cafe:manager_home' %}">사나리아Cafe</a>
               </li>              
+
+              <li class="nav-item d-flex align-items-center">
+                {% if user.is_authenticated %}
+                    <form method="post" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <button class="btn btn-outline-danger me-2" type="submit">Logout</button>
+                    </form>
+                    <a class="btn btn-outline-secondary" href="{% url 'profile' %}">{{ user.username }}</a>
+                {% else %}
+                    <a class="btn btn-primary text-white me-2" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </li>         
+
               <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   추가메뉴

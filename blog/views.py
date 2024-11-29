@@ -25,14 +25,16 @@ def category_add(request):
             return redirect('blog:category_list')
         
     elif request.method == "GET": # form 입력하는 페이지는 표시
+        categories = Category.objects.all()
         form = CategoryForm()  
-    return render(request, 'blog/category_form.html', context={'form':form})
+    return render(request, 'blog/category_form.html', context={'form':form, 'categories':categories})
             
 def post_detail(request, post_id):
     # post_id의 post를 보내주기
-    post = Post.objects.get(pk=post_id)
-    categories = Category.objects.all()
-    context = {'post':post,'categories':categories}
+    post = Post.objects.get(pk=post_id) # 지금 보여주고자 하는 디테일 페이지의 정보
+    posts = Post.objects.filter(category=post.category) # 현재 보는 내용에 추가로 다른 포스트들을 표현하기 위함
+    categories = Category.objects.all() # 사이드바에 카테고리항목을 표시하기 위한
+    context = {'post':post,'categories':categories, 'posts':posts}    
     return render(request, 'blog/post_detail.html', context)
 
 def category_post_list(request, category_id):

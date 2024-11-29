@@ -20,6 +20,9 @@ from . import settings
 from . import views
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('accounts/register/', views.UserCreateView.as_view(), name='register'),
+    path('accounts/register/done/', views.UserCreateDoneTV.as_view(), name='register_done'),
     path("",views.HomeView.as_view(), name='index') ,
     path("cafe/", include("cafe.urls")),
     path("blog/", include("blog.urls")),
