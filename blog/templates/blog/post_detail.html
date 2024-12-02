@@ -29,7 +29,7 @@
                 <a href="{% url 'blog:index' %}" class="btn btn-outline-primary btn-lg"><i class="bi bi-arrow-left-circle"></i> 목록</a>
             <!-- 자신한 작성한 post만 수정과 삭제를 할 수 있습니다! -->
             <!-- 지금 로그인한 사람과 포스트를 작성한 사람이 같을때만 아래 버튼을 활성화 시킵니다 -->
-             {% if user == post.author %}
+            {% if user == post.author %}
             <a href="{% url 'blog:post_edit' post.id %}" class="btn btn-warning btn-lg"><i class="bi bi-pencil-square"></i> 수정</a>
             <a href="{% url 'blog:post_delete' post.id %}" class="btn btn-danger btn-lg"><i class="bi bi-trash"></i> 삭제</a>
             {% endif %}

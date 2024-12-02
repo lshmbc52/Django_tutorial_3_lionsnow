@@ -25,7 +25,7 @@ class PostForm(forms.ModelForm):
             # 'category':forms.Select(attrs={
             #     'class':'form-control',
             # }),
-            'content':forms.TextInput(attrs={
+            'content':forms.Textarea(attrs={
                 'class':'form-control',
                 'rows':10,
                 'placeholder':'내용을 입력하세요'
