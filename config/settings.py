@@ -81,14 +81,20 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL 엔진 사용
+#         'NAME': os.getenv("DB_NAME"),                    # 생성한 데이터베이스 이름
+#         'USER': os.getenv("DB_USER"),                    # PostgreSQL 사용자 이름
+#         'PASSWORD': os.getenv("DB_PASSWORD"),            # 사용자 비밀번호
+#         'HOST': os.getenv("DB_HOST"),                       # 데이터베이스 호스트 (기본값: localhost)
+#         'PORT': os.getenv("DB_PORT"),                            # PostgreSQL 기본 포트
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',  # PostgreSQL 엔진 사용
-        'NAME': os.getenv("DB_NAME"),                    # 생성한 데이터베이스 이름
-        'USER': os.getenv("DB_USER"),                    # PostgreSQL 사용자 이름
-        'PASSWORD': os.getenv("DB_PASSWORD"),            # 사용자 비밀번호
-        'HOST': os.getenv("DB_HOST"),                       # 데이터베이스 호스트 (기본값: localhost)
-        'PORT': os.getenv("DB_PORT"),                            # PostgreSQL 기본 포트
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
