@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Post
 from .forms import CategoryForm, PostForm
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-def index(request):
+def index(request):    
     categories = Category.objects.all()
     posts = Post.objects.all()
     context = {'categories':categories,
@@ -16,6 +17,7 @@ def category_list(request):
     context = {'categories':categories}
     return render(request, 'blog/category_list.html', context)
 
+@login_required
 def category_add(request):
     if request.method == 'POST':
         form = CategoryForm(request.POST)
@@ -46,6 +48,7 @@ def category_post_list(request, category_id):
     context = {'posts':posts, 'category':category, 'categories':categories}
     return render(request, 'blog/index.html', context)
 
+@login_required
 def post_write(request, category_id):
     # post 작성
     # 이전에 했던 question, **choice** 어떤것과 유사한가?
@@ -64,10 +67,16 @@ def post_write(request, category_id):
             post = form.save(commit=False)  # 아직 DB에 저장하지 않음
             category = Category.objects.get(pk=category_id)
             post.category = category  # 카테고리 설정
+            # 추가적으로 작가 정보를 넣어야 됩니다!!
+            # 어떻게 하면 될까요??
+            # 11:40까지 해보겠습니다.
+            # request.user에 유저정보가 담겨 있습니다.
+            post.author = request.user
             post.save()
             return redirect('blog:post_detail', post_id=post.id)
             # return redirect('blog:index')
 
+@login_required
 def post_edit(request, post_id):
     # post_id인 post의 내용을 편집하기
     # 작성 폼의 형태는 기본 post와 같지만

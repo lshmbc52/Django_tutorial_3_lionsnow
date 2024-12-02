@@ -1,5 +1,4 @@
 from django.db import models
-
 # Create your models here.
 # Category, Post Table
 
@@ -17,6 +16,7 @@ class Category(models.Model):
         ordering = ['name']
 
 class Post(models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE, verbose_name='작성자')
     title = models.CharField(max_length=200, verbose_name='제목')
     content = models.TextField(verbose_name='내용')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, verbose_name='카테고리') ## Category 와 연결점
