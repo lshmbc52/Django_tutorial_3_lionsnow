@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .models import Category, Post
 from .forms import CategoryForm, PostForm
 from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from django.core.paginator import Paginator
 
 # Create your views here.
 def index(request):    
@@ -96,3 +98,31 @@ def post_delete(request, post_id):
     post = get_object_or_404(Post, pk=post_id)
     post.delete()
     return redirect('blog:index')
+
+def search(request):
+    """
+    통합 검색 - 제목, 내용, 작성자, 카테고리를 검색
+
+    1. 아래 내용으로 검색이 잘 되는지 살펴보겠습니다
+    2. debug toolbar를 이용해서 쿼리 실행 시간을 체크해 봅니다
+    3. 개선 방안이 있는지 고민해서 적용합니다.
+    --- 3시 10분까지 실습하겠습니다!
+    """
+    # 해당 검색어로 table 조회
+    # 조회 결과를 page와 결합해서(렌더링) 페이지를 응답하면 끝
+    query= request.GET['query']
+    posts = Post.objects.select_related('author','category').all()
+    searched_posts = posts.filter(
+        Q(title__icontains=query) |
+        Q(content__icontains=query) |
+        Q(author__username__icontains=query) |
+        Q(category__name__icontains=query)
+        )
+    
+    # Pagination 적용
+    paginator = Paginator(searched_posts, 2)
+    page_number = request.GET.get('page', 1)
+    page_obj = paginator.get_page(page_number)
+
+    context = {'searched_posts':page_obj}
+    return render(request, 'blog/search.html',context)
